@@ -439,7 +439,7 @@ public class InputDataUtil {
 	 * @param result
 	 * @return
 	 */
-	private static String 取得最后交易日期(byte[] result) {
+	protected static String 取得最后交易日期(byte[] result) {
 
 		// 每一行用换行符(\n)分割
 		// 每个数据用的是tab(\t)分割
