@@ -255,14 +255,13 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		output = convertInttoByte(财务dataInputBean飞狐.get财务个数());
 		财务dataOutputBean飞狐.set财务个数(output);
 
+		财务dataInputBean飞狐.setStockCode(取得市场代号2(财务dataInputBean飞狐.get市场()).concat(财务dataInputBean飞狐.get证券代码()).toCharArray());
 
 		output = convertChartoByte(财务dataInputBean飞狐.getStockCode());
 		财务dataOutputBean飞狐.setStockCode(output);
 
 		output = convertInttoByte(财务dataInputBean飞狐.getStart());
 		财务dataOutputBean飞狐.setStart(output);
-
-		财务dataInputBean飞狐.setStockCode(取得市场代号2(财务dataInputBean飞狐.get市场()).concat(财务dataInputBean飞狐.get证券代码()).toCharArray());
 
 
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
