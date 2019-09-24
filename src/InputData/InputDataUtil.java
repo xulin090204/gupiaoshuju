@@ -6,8 +6,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.sun.jna.Native;
 import com.sun.jna.ptr.ShortByReference;
 
@@ -15,8 +13,9 @@ import ConvertTool.impl.PROPERTY;
 
 public class InputDataUtil {
 
-	final static byte 深圳 = (byte)0;
-	final static byte 上海 = (byte)1;
+	final static byte 深圳 = (byte) 0;
+	final static byte 上海 = (byte) 1;
+
 	// 取得最后交易日的数据
 	public static boolean 取得行情数据和最后交易日(List<String> 当日行情数据list, String[] s最后交易日期) {
 
@@ -25,7 +24,7 @@ public class InputDataUtil {
 		byte[] Market = { 0, 1 };
 		byte[] Zqdm = null;
 		byte[] 取得行情数据 = null;
-		int 每次取得行情数据= 20;
+		int 每次取得行情数据 = 20;
 		//List<String> 取得行情 = new ArrayList();
 		// 连接服务器
 		if (TdxHqApi209912301.getConnect(PROPERTY.取得IP(), PROPERTY.取得Port(), Result, ErrInfo)) {
@@ -42,27 +41,26 @@ public class InputDataUtil {
 			// 要取得实时数据（因为取不到K线数据，所以只能拿到实时数据）
 			//------------------------------------------------------------
 			// 0=深圳
-			byte[] 深圳股票代码Result = new byte[1024*1024];
+			byte[] 深圳股票代码Result = new byte[1024 * 1024];
 			List<String[]> 股票代码ArrayList = new ArrayList();
 			if (TdxHqApi209912301.getGetSecurityList(深圳, (short) 0, Count, 深圳股票代码Result, ErrInfo, 股票代码ArrayList)) {
 
 				//List<String[]> 深圳股票代码ArrayList = getArrayListByGBK(深圳股票代码Result);
 				// 根据股票的结果数，取得行情数据
-				股票代码ArrayList =removeDuplicate(股票代码ArrayList);
-				//List<String> 行情数据 = 取得行情数据(深圳, 股票代码ArrayList, 每次取得行情数据);
- 				List<String> 行情数据 = 取得除权数据(深圳, 股票代码ArrayList);
+				股票代码ArrayList = removeDuplicate(股票代码ArrayList);
+				List<String> 行情数据 = 取得行情数据(深圳, 股票代码ArrayList, 每次取得行情数据);
 				当日行情数据list.addAll(行情数据);
 
 			}
 
-			byte[] 上海股票代码Result = new byte[1024*1024];
+			byte[] 上海股票代码Result = new byte[1024 * 1024];
 			股票代码ArrayList = new ArrayList();
 			// 1=上海
 			if (TdxHqApi209912301.getGetSecurityList(上海, (short) 0, Count, 上海股票代码Result, ErrInfo, 股票代码ArrayList)) {
 				//List<String[]> 上海股票代码ArrayList = getArrayListByGBK(上海股票代码Result);
 				// 根据股票的结果数，取得行情数据
-				股票代码ArrayList =removeDuplicate(股票代码ArrayList);
-				List<String> 行情数据 = 取得除权数据(上海, 股票代码ArrayList);
+				股票代码ArrayList = removeDuplicate(股票代码ArrayList);
+				List<String> 行情数据 = 取得行情数据(上海, 股票代码ArrayList, 每次取得行情数据);
 				当日行情数据list.addAll(行情数据);
 
 			}
@@ -84,7 +82,7 @@ public class InputDataUtil {
 		//------------------------
 		String s = Native.toString(取得结果Result, "GBK");
 		String s1[] = s.split("\n");
-		for(int o=1; o<s1.length; o++ ) {
+		for (int o = 1; o < s1.length; o++) {
 			ResultListByGBK.add(s1[o].split("\t"));
 		}
 		return ResultListByGBK;
@@ -98,7 +96,7 @@ public class InputDataUtil {
 	static List<String> getStringListByGBK(byte[] 取得结果Result) {
 		List<String> ResultListByGBK = new ArrayList();
 
-		if(取得结果Result == null || 取得结果Result.length == 0) {
+		if (取得结果Result == null || 取得结果Result.length == 0) {
 			return null;
 		}
 		//------------------------
@@ -106,7 +104,7 @@ public class InputDataUtil {
 		//------------------------
 		String s = Native.toString(取得结果Result, "GBK");
 		String s1[] = s.split("\n");
-		for(int o=1; o<s1.length; o++ ) {
+		for (int o = 1; o < s1.length; o++) {
 			ResultListByGBK.add(s1[o]);
 		}
 		return ResultListByGBK;
@@ -115,7 +113,7 @@ public class InputDataUtil {
 	public static List<String[]> getStringListByGBK3(byte[] 取得结果Result) {
 		List<String[]> ResultListByGBK = new ArrayList();
 
-		if(取得结果Result == null || 取得结果Result.length == 0) {
+		if (取得结果Result == null || 取得结果Result.length == 0) {
 			return null;
 		}
 		//------------------------
@@ -123,13 +121,15 @@ public class InputDataUtil {
 		//------------------------
 		String s = Native.toString(取得结果Result, "GBK");
 		String s1[] = s.split("\n");
-		for(int o=1; o<s1.length; o++ ) {
+		for (int o = 1; o < s1.length; o++) {
 			ResultListByGBK.add(s1[o].split("\t"));
 		}
 		return ResultListByGBK;
 	}
-	static Byte 项目分割 = (byte)9;
-	static Byte 一套分割 = (byte)10;
+
+	static Byte 项目分割 = (byte) 9;
+	static Byte 一套分割 = (byte) 10;
+
 	/**
 	 *
 	 * @param i市场代码
@@ -142,16 +142,16 @@ public class InputDataUtil {
 		byte[] Result = new byte[65535];
 		byte[] ErrInfo = new byte[256];
 		List<String> 取得行情 = new ArrayList<String>();
-		ShortByReference Count=new ShortByReference();
-		int 股票代码位置=0;
-		int 股票名称位置=2;
+		ShortByReference Count = new ShortByReference();
+		int 股票代码位置 = 0;
+		int 股票名称位置 = 2;
 		int 一套个数 = 8;
 		// List<String[]> Byte数组中的数据 = 取得Byte数组中的数据(股票代码ArrayList, 项目分割 , 一套分割 , 一套个数);
 
 		// 每500股取一次行情
 		for (int i开始位置 = 0; i开始位置 < 股票代码ArrayList.size(); i开始位置 = i开始位置 + 每次取得行情数据) {
 
-			int[] 每次取得行情数据array = new int[]{每次取得行情数据};
+			int[] 每次取得行情数据array = new int[] { 每次取得行情数据 };
 
 			// 做成这500的股票代码
 			String[] 股票代码array = 做成这500的股票信息(股票代码位置, i市场代码, 每次取得行情数据array, i开始位置, 股票代码ArrayList);
@@ -162,19 +162,20 @@ public class InputDataUtil {
 			// 取得行情数据
 			//------------------------
 			// 每次做大取得两个
-			if( 股票代码array[0] == null )break;
-			Count.setValue((short)每次取得行情数据array[0]);
+			if (股票代码array[0] == null)
+				break;
+			Count.setValue((short) 每次取得行情数据array[0]);
 			// 获取盘口五档报价
 			byte[] 行情数据array = TdxHqApi209912301.getGetSecurityQuotes(市场代码array, 股票代码array, Count, Result, ErrInfo);
 
 			//------------------------
 			// 取出行情数据
 			//------------------------
-//			String s = Native.toString(行情数据, "GBK");
-//			String s1[] = s.split("\n");
-//			for(int o=1; o<=每次取得行情数据array[0]; o++ ) {
-//				取得行情.add(s1[o]);
-//			}
+			//			String s = Native.toString(行情数据, "GBK");
+			//			String s1[] = s.split("\n");
+			//			for(int o=1; o<=每次取得行情数据array[0]; o++ ) {
+			//				取得行情.add(s1[o]);
+			//			}
 			取得行情.addAll(getStringListByGBK2(行情数据array, 股票名称array));
 
 		}
@@ -190,7 +191,7 @@ public class InputDataUtil {
 	private static Collection<? extends String> getStringListByGBK2(byte[] 行情数据, String[] 股票名称) {
 		List<String> ResultListByGBK = new ArrayList();
 
-		if(行情数据 == null || 行情数据.length == 0) {
+		if (行情数据 == null || 行情数据.length == 0) {
 			return null;
 		}
 		//------------------------
@@ -198,8 +199,8 @@ public class InputDataUtil {
 		//------------------------
 		String s = Native.toString(行情数据, "GBK");
 		String s1[] = s.split("\n");
-		for(int o=1; o<s1.length; o++ ) {
-			ResultListByGBK.add(s1[o].concat("\t").concat(股票名称[o-1]));
+		for (int o = 1; o < s1.length; o++) {
+			ResultListByGBK.add(s1[o].concat("\t").concat(股票名称[o - 1]));
 		}
 		return ResultListByGBK;
 	}
@@ -220,26 +221,30 @@ public class InputDataUtil {
 		int n = 取得行情数[0];
 		String[] 股票代码 = new String[n];
 
-		for(int i=i开始位置, j = 0 ; j < n; i++) {
+		for (int i = i开始位置, j = 0; j < n; i++) {
 			// 如果超界了，就只好有多少取多少了。
-			if(i >= 股票代码Result.size()) {
-				if(j == 0) {break;}
-				股票代码 = getStrFromStrArray(股票代码, 0, j-1);
+			if (i >= 股票代码Result.size()) {
+				if (j == 0) {
+					break;
+				}
+				股票代码 = getStrFromStrArray(股票代码, 0, j - 1);
 				取得行情数[0] = j;
 				break;
 			}
-			if(股票代码Result.get(i)[0].length() != 6) continue;
-			if(i市场代码 ==1) {
-				if((股票代码Result.get(i)[0].charAt(0) == '6'|| 股票代码Result.get(i)[0].charAt(0) == '0'|| 股票代码Result.get(i)[0] == "1A0001")) {
+			if (股票代码Result.get(i)[0].length() != 6)
+				continue;
+			if (i市场代码 == 1) {
+				if ((股票代码Result.get(i)[0].charAt(0) == '6' || 股票代码Result.get(i)[0].charAt(0) == '0'
+						|| 股票代码Result.get(i)[0] == "1A0001")) {
 
-				}else {
+				} else {
 					continue;
 				}
 			}
-			if(i市场代码 ==0) {
-				if((股票代码Result.get(i)[0].charAt(0) == '1')) {
+			if (i市场代码 == 0) {
+				if ((股票代码Result.get(i)[0].charAt(0) == '1')) {
 					continue;
-				}else {
+				} else {
 
 				}
 			}
@@ -253,12 +258,12 @@ public class InputDataUtil {
 
 	private static String[] getStrFromStrArray(String[] 股票代码, int i开, int i闭) {
 		// 第一次 i闭=0， i开=10
-		if((i闭 - i开) == 0) {
-			return new String[] {股票代码[0]};
+		if ((i闭 - i开) == 0) {
+			return new String[] { 股票代码[0] };
 		}
 		String b[] = new String[i闭 - i开];
 
-		for(int i=0,j=i开; i< i闭 - i开 ; i++,j++) {
+		for (int i = 0, j = i开; i < i闭 - i开; i++, j++) {
 			b[i] = 股票代码[j];
 		}
 		return b;
@@ -276,42 +281,41 @@ public class InputDataUtil {
 		String[] 一套数据 = new String[一套个数];
 
 		// 循环取得【股票代码Result】中每一个byte
-		for(byte b: 股票代码Result) {
+		for (byte b : 股票代码Result) {
 
-
-			if(b != 项目分割  && b != 一套分割) {
+			if (b != 项目分割 && b != 一套分割) {
 				//---------------------------------
 				// 如果还没有碰到（项目分割/一套分割）
 				// 就继续计数
 				//---------------------------------
 
-			}else {
+			} else {
 				//---------------------------------
 				// 如果碰到了其中一个（项目分割/一套分割）
 				// 那么这个数据就形成了。
 				//---------------------------------
-				if(i一套数据中的计数器 == 一套个数) {
+				if (i一套数据中的计数器 == 一套个数) {
 					sList.add(一套数据);
 					一套数据 = new String[一套个数];
 					i一套数据中的计数器 = 0;
 				}
-				一套数据[i一套数据中的计数器] = getGB2312StrFromByte(股票代码Result,i开,i闭);
-				if(i一套数据中的计数器 ==42 && sList.size()==1) {
-					i一套数据中的计数器 =42;
+				一套数据[i一套数据中的计数器] = getGB2312StrFromByte(股票代码Result, i开, i闭);
+				if (i一套数据中的计数器 == 42 && sList.size() == 1) {
+					i一套数据中的计数器 = 42;
 				}
-				if(i一套数据中的计数器 ==41 && sList.size()==2) {
-					i一套数据中的计数器 =41;
+				if (i一套数据中的计数器 == 41 && sList.size() == 2) {
+					i一套数据中的计数器 = 41;
 				}
 			}
 
-			if(b == 项目分割){
+			if (b == 项目分割) {
 				// 需要移动i开的位置
 				i开 = i闭 + 1;
 				i一套数据中的计数器++;
 			}
 
 			// 而且当你碰到的是【一套分割】时
-			if(b == 一套分割) {
+			if (b == 一套分割) {
 				//---------------------------------
 				// 需要移动i开的位置
 				// 并且将取到的数据计入到sList中
@@ -325,8 +329,8 @@ public class InputDataUtil {
 			i闭++;
 		}
 		// 说明最后一位不是【一套分割】的标志位就结束了。
-		if(i一套数据中的计数器 != 0) {
-			一套数据[i一套数据中的计数器] = getGB2312StrFromByte(股票代码Result,i开,i闭);
+		if (i一套数据中的计数器 != 0) {
+			一套数据[i一套数据中的计数器] = getGB2312StrFromByte(股票代码Result, i开, i闭);
 			sList.add(一套数据);
 			i一套数据中的计数器 = 0;
 		}
@@ -339,15 +343,15 @@ public class InputDataUtil {
 
 		byte b[] = new byte[(int) (i闭 - i开)];
 
-		for(long i=0,j=i开; i< i闭 - i开 ; i++,j++) {
+		for (long i = 0, j = i开; i < i闭 - i开; i++, j++) {
 
 			// 如果这个数值是零，且以后的，都为零时。
 			// 舍掉后面的数据。
-			if(股票代码Result[(int) j] == 0) {
-				if(isBlankFromByte(股票代码Result, (int) j, 股票代码Result.length)) {
+			if (股票代码Result[(int) j] == 0) {
+				if (isBlankFromByte(股票代码Result, (int) j, 股票代码Result.length)) {
 
 					b[(int) i] = 股票代码Result[(int) j];
-					b = cutByteFromByte(b, 0, (int) (j-i开));
+					b = cutByteFromByte(b, 0, (int) (j - i开));
 					break;
 				}
 			}
@@ -370,16 +374,16 @@ public class InputDataUtil {
 	 */
 	private static byte[] removeBlankFromByte(byte[] 股票代码Result, long i开, long i闭) {
 		byte b[] = new byte[(int) (i闭 - i开)];
-		for(long i=0,j=i开; i< i闭 - i开 ; i++,j++) {
+		for (long i = 0, j = i开; i < i闭 - i开; i++, j++) {
 
 			// 如果这个数值是零，且以后的，都为零时。
 			// 舍掉后面的数据。
-			if(股票代码Result[(int) j] == 0) {
-				if(isBlankFromByte(股票代码Result, (int) j, 股票代码Result.length)) {
+			if (股票代码Result[(int) j] == 0) {
+				if (isBlankFromByte(股票代码Result, (int) j, 股票代码Result.length)) {
 
 					b[(int) i] = 股票代码Result[(int) j]; //
-					b = cutByteFromByte(b, 0, (int) (j-i开) + 1);
-					b[(int) j] = (byte)10;
+					b = cutByteFromByte(b, 0, (int) (j - i开) + 1);
+					b[(int) j] = (byte) 10;
 					break;
 				}
 			}
@@ -387,10 +391,11 @@ public class InputDataUtil {
 		}
 		return b;
 	}
+
 	private static boolean isBlankFromByte(byte[] 股票代码Result, int i开, int i闭) {
 
-		int iResult=0;
-		for(int i=0,j=i开; i< i闭 - i开 ; i++,j++) {
+		int iResult = 0;
+		for (int i = 0, j = i开; i < i闭 - i开; i++, j++) {
 			iResult += 股票代码Result[j];
 		}
 		return iResult == 0;
@@ -398,17 +403,17 @@ public class InputDataUtil {
 	}
 
 	public static byte[] cutByteFromByte(byte[] 股票代码Result, int i开, int i闭) {
-		if((i闭 - i开)>=股票代码Result.length) {
+		if ((i闭 - i开) >= 股票代码Result.length) {
 			return 股票代码Result;
 		}
 		// 第一次 i闭=0， i开=10
-		if((i闭 - i开) == 0) {
-			return new byte[] {股票代码Result[0]};
+		if ((i闭 - i开) == 0) {
+			return new byte[] { 股票代码Result[0] };
 		}
 		byte b[] = new byte[i闭 - i开];
 
-		for(int i=0,j=i开; i< i闭 - i开 ; i++,j++) {
-			if(i>= i闭 - i开) {
+		for (int i = 0, j = i开; i < i闭 - i开; i++, j++) {
+			if (i >= i闭 - i开) {
 				break;
 			}
 
@@ -441,28 +446,28 @@ public class InputDataUtil {
 	 */
 	protected static String 取得最后交易日期(byte[] result) {
 
-		// 每一行用换行符(\n)分割
+		// 每一行用换行符(\r)分割
 		// 每个数据用的是tab(\t)分割
 
-			  // 先将，二进制result转成字符串        // 例、String s = Native.toString(Result, "GBK");
-			  // 再用换行符将上述字符串按行分割                	// 例、String[] 所有行 = s.split("\r");
-			  // 最后把第二行的第二个字符串提取、并返回        	// 例、String 第二行 = 所有行[1];
-			               									// 例、String[] 第二行所有字符串 = 第二行.split("\t");
-			                                                //     String 第二行第二个字符= 第二行所有字符串[1];
-			                                                //     return 第二行第二个字符
-			  /*
-			   服务器名称 最后交易日期 接口过期日期
-			   招商证券北京行情 20190909 20991230
-			   */
-		  String s = Native.toString(result, "GBK");
-		  /*
-		   * 服务器名称\t最后交易日期\t接口过期日期\r招商证券北京行情\t20190909\t20991230
-		   */
-		  String[] 所有行 = s.split("\n");  	// 换行符=\r
-		  String 第二行 = 所有行[1];   		// 0,1
-		  String[] 第二行所有字符串 = 第二行.split("\t");
-		  String 第二行第二个字符= 第二行所有字符串[1];
-		  return 第二行第二个字符;
+		// 先将，二进制result转成字符串        // 例、String s = Native.toString(Result, "GBK");
+		// 再用换行符将上述字符串按行分割                	// 例、String[] 所有行 = s.split("\r");
+		// 最后把第二行的第二个字符串提取、并返回        	// 例、String 第二行 = 所有行[1];
+		// 例、String[] 第二行所有字符串 = 第二行.split("\t");
+		//     String 第二行第二个字符= 第二行所有字符串[1];
+		//     return 第二行第二个字符
+		/*
+		 服务器名称 最后交易日期 接口过期日期
+		 招商证券北京行情 20190909 20991230
+		 */
+		String s = Native.toString(result, "GBK");
+		/*
+		 * 服务器名称\t最后交易日期\t接口过期日期\r招商证券北京行情\t20190909\t20991230
+		 */
+		String[] 所有行 = s.split("\n"); // 换行符=\r
+		String 第二行 = 所有行[1]; // 0,1
+		String[] 第二行所有字符串 = 第二行.split("\t");
+		String 第二行第二个字符 = 第二行所有字符串[1];
+		return 第二行第二个字符;
 
 		//  // 取得最后的18个byte！
 		//  List<String[]> sList =取得Byte数组中的数据(result,项目分割,一套分割,3 );
@@ -474,36 +479,7 @@ public class InputDataUtil {
 		list.clear();
 		list.addAll(h);
 		return list;
-		}
-
-	/**
-	 * 取得除权数据
-	 * @param i市场代码
-	 * @param 股票代码ArrayList
-	 * @return List<String> 取得的权息信息List
-	 */
-	public static List<String> 取得除权数据(int i市场代码, List<String[]> 股票代码ArrayList) {
-
-		byte[] Result = new byte[65535];
-		byte[] ErrInfo = new byte[256];
-		List<String> 取得的权息信息List = new ArrayList<String>();
-
-		for (int i开始位置 = 0; i开始位置 < 股票代码ArrayList.size(); i开始位置++) {
-			boolean bResult = false;
-
-			String[] 股票代码 = 股票代码ArrayList.get(i开始位置);
-
-			bResult= TdxHqApi209912301.TdxHqApi20991230.TdxHq_GetXDXRInfo((byte)i市场代码, 股票代码[0],Result, ErrInfo);
-
-			String s取得的权息信息 = Native.toString(Result, "GBK");
-			if(!StringUtils.isEmpty(s取得的权息信息)) {
-				System.out.println(s取得的权息信息);
-			}
-
-			取得的权息信息List.add(s取得的权息信息);
-
-			//return 取得的权息信息List;
-		}
-		return 取得的权息信息List;
 	}
+
+
 }

@@ -5,14 +5,15 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 public class OutputDataUtil爸爸 {
-	String[] sStockCode =
-			new String[] {
-					"SH",
-					"SZ"
-			};
+	String[] sStockCode = new String[] {
+			"SH",
+			"SZ"
+	};
+
 	/**
 	 *
 	 * @param inputData
@@ -22,6 +23,7 @@ public class OutputDataUtil爸爸 {
 		//Float.floatToIntBits(utCtime))
 		return float倒叙(inputData);
 	}
+
 	/**
 	 *
 	 * @param inputData
@@ -30,9 +32,11 @@ public class OutputDataUtil爸爸 {
 	protected static byte[] convertInttoByte(int inputData) {
 		return int倒叙(inputData);
 	}
+
 	public static byte[] convertInttoBytePublic(int inputData) {
 		return convertInttoByte(inputData);
 	}
+
 	/**
 	 *
 	 * @param inputData
@@ -45,12 +49,12 @@ public class OutputDataUtil爸爸 {
 	protected static byte[] convertGB2312ChartoByte(char[] stockName) {
 		ByteBuffer buffer = ByteBuffer.allocate(12);
 		byte[] result = null;
-			try {
-				result = new String(stockName).getBytes("GB2312");
-			} catch (UnsupportedEncodingException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
+		try {
+			result = new String(stockName).getBytes("GB2312");
+		} catch (UnsupportedEncodingException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
 		buffer.put(result);
 		return buffer.array();
@@ -82,7 +86,7 @@ public class OutputDataUtil爸爸 {
 	static private byte[] char倒叙(char[] inputData) {
 		ByteBuffer buffer = ByteBuffer.allocate(12);
 		byte[] result = new String(inputData).getBytes();
-		if(result.length>12) {
+		if (result.length > 12) {
 			try {
 				result = new String(inputData).getBytes("GB2312");
 			} catch (UnsupportedEncodingException e) {
@@ -114,12 +118,12 @@ public class OutputDataUtil爸爸 {
 		//--------------------
 		// get Date's UTCtime
 		//--------------------
-//		SimpleDateFormat dateFormat = new SimpleDateFormat("");
-//		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-//		System.out.println("UTC Time is: " + dateFormat.format(date));
+		//		SimpleDateFormat dateFormat = new SimpleDateFormat("");
+		//		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+		//		System.out.println("UTC Time is: " + dateFormat.format(date));
 		// return (int)date.getTime();
 		// return (int)date.getTime() % 1000;
-		return (int)(date.getTime() / 1000);
+		return (int) (date.getTime() / 1000);
 	}
 
 	/**
@@ -127,7 +131,7 @@ public class OutputDataUtil爸爸 {
 	 * @param str
 	 */
 	protected String 取得市场代号(String s股票代号) {
-		if(s股票代号.charAt(0)=='6') {
+		if (s股票代号.charAt(0) == '6') {
 			return sStockCode[0];
 		}
 		return sStockCode[1];
@@ -139,18 +143,20 @@ public class OutputDataUtil爸爸 {
 		//------------------------------
 
 		// 取得所有参数的实际大小的总和
-		int i所有参数的实际大小的总和=0;
-		for(byte[]对象数组 : 合并对象数组 )  {
-			if(对象数组 == null || 对象数组.length == 0) continue;
+		int i所有参数的实际大小的总和 = 0;
+		for (byte[] 对象数组 : 合并对象数组) {
+			if (对象数组 == null || 对象数组.length == 0)
+				continue;
 			i所有参数的实际大小的总和 += 对象数组.length;
 		}
 		byte[] outputToByte = new byte[i所有参数的实际大小的总和];
 
 		// 然后顺次加入其中
-		int i已经加入的数据大小=0;
-		for(byte[]对象数组 : 合并对象数组 )  {
+		int i已经加入的数据大小 = 0;
+		for (byte[] 对象数组 : 合并对象数组) {
 			// 如果【对象数组】没有数据就忽略。
-			if(对象数组 == null || 对象数组.length == 0) continue;
+			if (对象数组 == null || 对象数组.length == 0)
+				continue;
 
 			// 处理内容：将数组1加到数组2
 			//-----------------------------------------------------------
@@ -168,4 +174,23 @@ public class OutputDataUtil爸爸 {
 
 		return outputToByte;
 	}
+
+	/**
+	  * 数组组合的第2种写法
+	  * @param 合并对象数组
+	  * @return
+	  */
+	public static byte[] 数组合并2(byte[]... 合并对象数组) {
+		byte[] outputToByte = {};
+		int i所有参数的实际大小的总和 = 0;
+		for (byte[] 对象数组 : 合并对象数组) {
+
+			i所有参数的实际大小的总和 += 对象数组.length;
+			outputToByte = Arrays.copyOf(outputToByte, i所有参数的实际大小的总和);
+			System.arraycopy(对象数组, 0, outputToByte, i所有参数的实际大小的总和-对象数组.length, 对象数组.length);
+		}
+		return outputToByte;
+	}
+
+
 }

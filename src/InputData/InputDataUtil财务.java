@@ -19,19 +19,19 @@ import ConvertTool.impl.PROPERTY;
 import ConvertTool.impl.StockData爸爸;
 import OutputData.OutputDataUtil爸爸;
 
-public class InputDataUtil除权 extends InputDataUtil{
+public class InputDataUtil财务 extends InputDataUtil{
 
 	/**
-	  * 取得除权数据
+	  * 取得财务数据
 	  * @param i市场代码
 	  * @param 股票代码ArrayList
-	  * @return List<String> 取得的权息信息List
+	  * @return List<String> 取得的财务信息List
 	  */
-	public static List<String> 取得除权数据(int i市场代码, List<String[]> 股票代码ArrayList) {
+	public static List<String> 取得财务数据(int i市场代码, List<String[]> 股票代码ArrayList) {
 
 		byte[] Result = new byte[65535];
 		byte[] ErrInfo = new byte[256];
-		List<String> 取得的权息信息List = new ArrayList<String>();
+		List<String> 取得的财务信息List = new ArrayList<String>();
 
 		//for (int i开始位置 = 0; i开始位置 < 股票代码ArrayList.size(); i开始位置++) {
 		for (int i开始位置 = 0; i开始位置 < 10; i开始位置++) {
@@ -39,18 +39,18 @@ public class InputDataUtil除权 extends InputDataUtil{
 
 			String[] 股票代码 = 股票代码ArrayList.get(i开始位置);
 
-			bResult = TdxHqApi209912301.TdxHqApi20991230.TdxHq_GetXDXRInfo((byte) i市场代码, 股票代码[0], Result, ErrInfo);
+			bResult = TdxHqApi209912301.TdxHqApi20991230.TdxHq_GetFinanceInfo((byte) i市场代码, 股票代码[0], Result, ErrInfo);
 
-			String s取得的权息信息 = Native.toString(Result, "GBK");
-			if (!StringUtils.isEmpty(s取得的权息信息)) {
-				System.out.println(s取得的权息信息);
+			String s取得的财务信息 = Native.toString(Result, "GBK");
+			if (!StringUtils.isEmpty(s取得的财务信息)) {
+				System.out.println(s取得的财务信息);
 			}
 
-			取得的权息信息List.add(s取得的权息信息);
+			取得的财务信息List.add(s取得的财务信息);
 
-			//return 取得的权息信息List;
+			//return 取得的财务信息List;
 		}
-		return 取得的权息信息List;
+		return 取得的财务信息List;
 	}
 
 
@@ -60,7 +60,7 @@ public class InputDataUtil除权 extends InputDataUtil{
 	 * @param s最后交易日期
 	 * @return
 	 */
-	public static boolean 取得除权数据和最后交易日(List<String> 除权数据list, String[] s最后交易日期) {
+	public static boolean 取得财务数据和最后交易日(List<String> 财务数据list, String[] s最后交易日期) {
 
 		byte[] Result = new byte[65535];
 		byte[] ErrInfo = new byte[256];
@@ -91,8 +91,8 @@ public class InputDataUtil除权 extends InputDataUtil{
 				//List<String[]> 深圳股票代码ArrayList = getArrayListByGBK(深圳股票代码Result);
 				// 根据股票的结果数，取得行情数据
 				股票代码ArrayList = removeDuplicate(股票代码ArrayList);
-				List<String> 行情数据 = 取得除权数据(深圳, 股票代码ArrayList);
-				除权数据list.addAll(行情数据);
+				List<String> 行情数据 = 取得财务数据(深圳, 股票代码ArrayList);
+				财务数据list.addAll(行情数据);
 
 			}
 
@@ -103,14 +103,14 @@ public class InputDataUtil除权 extends InputDataUtil{
 				//List<String[]> 上海股票代码ArrayList = getArrayListByGBK(上海股票代码Result);
 				// 根据股票的结果数，取得行情数据
 				股票代码ArrayList = removeDuplicate(股票代码ArrayList);
-				List<String> 行情数据 = 取得除权数据(上海, 股票代码ArrayList);
-				除权数据list.addAll(行情数据);
+				List<String> 行情数据 = 取得财务数据(上海, 股票代码ArrayList);
+				财务数据list.addAll(行情数据);
 
 			}
 
 		}
 		try {
-			writeFileContext3(除权数据list, ".\\除权数据.data");
+			writeFileContext3(财务数据list, ".\\财务数据.data");
 		} catch (Exception e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -119,14 +119,14 @@ public class InputDataUtil除权 extends InputDataUtil{
 		return true;
 	}
 
-	private static void writeFileContext3(List<String> 除权数据list, String path) throws IOException {
+	private static void writeFileContext3(List<String> 财务数据list, String path) throws IOException {
 		File file = new File(path);
 		//如果没有文件就创建
 		if (!file.isFile()) {
 			file.createNewFile();
 		}
 		BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-		for (String l : 除权数据list) {
+		for (String l : 财务数据list) {
 			l.replace('\n', '\b');
 			writer.write(l + "\r\n");
 		}
@@ -168,7 +168,7 @@ public class InputDataUtil除权 extends InputDataUtil{
 			bufferedReader = new BufferedReader(fileReader);
 			while ((str = bufferedReader.readLine()) != null) {
 				// 市场	证券代码	日期	权息数据类别	前流通盘或派息金额	前总股本或配股价	后流通盘或送股数	后总股本或配售数
-				if(str.equals("市场	证券代码	日期	权息数据类别	前流通盘或派息金额	前总股本或配股价	后流通盘或送股数	后总股本或配售数")) {
+				if(str.equals("市场	证券代码	日期	财务数据类别	前流通盘或派息金额	前总股本或配股价	后流通盘或送股数	后总股本或配售数")) {
 					if(flg == false) {
 
 					}else {

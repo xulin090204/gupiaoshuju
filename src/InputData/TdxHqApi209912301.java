@@ -189,8 +189,7 @@ public class TdxHqApi209912301
 //			//boolean  TdxHq_GetCompanyInfoContent(byte Market, String Zqdm, String FileName, int Start, int Length, byte[] Result, byte[] ErrInfo);
 //			String fileName = null;
 //			int start = 0;
-//			int length = 9982;
-//			// TdxHq_GetCompanyInfoContent
+//			int length = 0;
 //			boolean1= TdxHqLibrary1.TdxHq_GetCompanyInfoContent((byte)0, "000001", fileName, start, length, Result, ErrInfo);
 //			if (!boolean1)
 //			{
@@ -202,6 +201,8 @@ public class TdxHqApi209912301
 //			System.out.println("fileName" + fileName);
 //			System.out.println("start" + start);
 //			System.out.println("length" + length);
+
+
 			//获取权息数据
 			//boolean  TdxHq_GetXDXRInfo(byte Market, String Zqdm, byte[] Result, byte[] ErrInfo);
 			boolean1= TdxHqLibrary1.TdxHq_GetXDXRInfo((byte)0, "000001",Result, ErrInfo);
@@ -334,7 +335,6 @@ public class TdxHqApi209912301
 
 		System.setProperty("jna.library.path", ".\\src\\InputData\\");
 		TdxHqApi20991230 = (TdxHqApi2099)Native.loadLibrary("TdxHqApi20991230.dll",TdxHqApi2099.class);
-
 		return TdxHqApi20991230.TdxHq_Connect(IP, Port, Result, ErrInfo);
 	}
 }

@@ -116,7 +116,7 @@ public class StockData爸爸 {
 		return false;
 	}
 
-	protected void write(String sFileName,  byte[] byteData) {
+	public void write(String sFileName,  byte[] byteData) {
 
 		//
 		File file = new File(FilenameUtils.getFullPath(sFileName));
@@ -215,7 +215,7 @@ public class StockData爸爸 {
 				return false;
 			}
 		}
-		
+
 		if(s[1].equals("002067")) {
 			s[1] = "002067";
 		}
@@ -231,7 +231,7 @@ public class StockData爸爸 {
 				&& !isZore(s[5])
 				&& !isZore(s[6])
 				&& !isZore(s[7])
-				
+
 //				&& NumberUtils.isDigits(s[3])
 //				&& NumberUtils.isDigits(s[4])
 //				&& NumberUtils.isDigits(s[5])
