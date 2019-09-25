@@ -26,7 +26,7 @@ public class StockDataConvertTool {
 			new StockData除权ConvertTool().输出到除权文件();//除权数据
 			break;
 		case "4":
-			new StockData财务ConvertTool().输出到财务文件();//除权数据
+			new StockData财务ConvertTool().输出到财务文件();//财务数据
 			break;
 
 		}

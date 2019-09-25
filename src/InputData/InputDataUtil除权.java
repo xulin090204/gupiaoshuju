@@ -33,8 +33,8 @@ public class InputDataUtil除权 extends InputDataUtil{
 		byte[] ErrInfo = new byte[256];
 		List<String> 取得的权息信息List = new ArrayList<String>();
 
-		//for (int i开始位置 = 0; i开始位置 < 股票代码ArrayList.size(); i开始位置++) {
-		for (int i开始位置 = 0; i开始位置 < 10; i开始位置++) {
+		for (int i开始位置 = 0; i开始位置 < 股票代码ArrayList.size(); i开始位置++) {
+			//for (int i开始位置 = 0; i开始位置 < 10; i开始位置++) {
 			boolean bResult = false;
 
 			String[] 股票代码 = 股票代码ArrayList.get(i开始位置);

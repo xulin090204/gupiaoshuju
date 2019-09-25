@@ -151,7 +151,7 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 		return resultByte深沪股票财务输出数据;
 	}
 
-	public static byte[] 解析每一行的财务数据(String[] s最后交易日期, String s财务Data, 财务DataOutputBean飞狐 财务dataOutputBean飞狐) {
+	public static byte[]解析每一行的财务数据(  String[] s最后交易日期, String s财务Data, 财务DataOutputBean飞狐 财务dataOutputBean飞狐) {
 		/*=======================================
 		|-----header			️
 		|-----type
