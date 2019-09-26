@@ -172,6 +172,7 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		// 市场 证券代码 日期 权息数据类别 派息金额 配股价 送股数 配股数
 		财务DataInputBean飞狐 财务dataInputBean飞狐 = new 财务DataInputBean飞狐();
 
+
 		财务dataInputBean飞狐.set市场(sData[0]);
 		财务dataInputBean飞狐.set证券代码(sData[1]);
 		财务dataInputBean飞狐.set流通股本(Float.parseFloat(sData[2]));
@@ -243,38 +244,21 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		 */
 		byte[] outputData最终 = {};
 		byte[] output = null;
-
-		output = convertInttoByte(财务dataInputBean飞狐.getHeader());
+		output =convertInttoByte(0xffffffd7);
 		财务dataOutputBean飞狐.setHeader(output);
 
-
-		output = convertInttoByte(财务dataInputBean飞狐.getType());
+		output =convertInttoByte(0x00000101);
 		财务dataOutputBean飞狐.setType(output);
 
-
-		output = convertInttoByte(财务dataInputBean飞狐.get财务个数());
-		财务dataOutputBean飞狐.set财务个数(output);
+		output =convertInttoByte(0x00000000);
+		财务dataOutputBean飞狐.set空白(output);
 
 		财务dataInputBean飞狐.setStockCode(取得市场代号2(财务dataInputBean飞狐.get市场()).concat(财务dataInputBean飞狐.get证券代码()).toCharArray());
-
 		output = convertChartoByte(财务dataInputBean飞狐.getStockCode());
-		财务dataOutputBean飞狐.setStockCode(output);
-
-		output = convertInttoByte(财务dataInputBean飞狐.getStart());
-		财务dataOutputBean飞狐.setStart(output);
+		财务dataOutputBean飞狐.set股票代码(output);
+		// outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 
 
-		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get流通股本());
-		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get所属省份());
-		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get所属行业());
-		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get账务更新日期());
-		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get上市日期());
-		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get总股本());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get国家股());
@@ -287,9 +271,13 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.getH股());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get流通股本());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get职工股());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get总资产());
+		output = convertFloattoByte(财务dataInputBean飞狐.getA2转配股());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get总资产千元());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get流动资产());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
@@ -297,7 +285,7 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get无形资产());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get股东人数());
+		output = convertFloattoByte(财务dataInputBean飞狐.get长期投资());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get流动负债());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
@@ -305,23 +293,25 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get资本公积金());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get净资产());
+		output = convertFloattoByte(财务dataInputBean飞狐.get每股公积金());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get股东权益());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get主营收入());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get主营利润());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get应收帐款());
+		output = convertFloattoByte(财务dataInputBean飞狐.get其他利润());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get营业利润());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get投资收益());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get经营现金流());
+		output = convertFloattoByte(财务dataInputBean飞狐.get补贴收入());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get总现金流());
+		output = convertFloattoByte(财务dataInputBean飞狐.get营业外收支());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get存贷());
+		output = convertFloattoByte(财务dataInputBean飞狐.get损益调整());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get利润总额());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
@@ -329,14 +319,58 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get净利润());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get未分利润());
+		output = convertFloattoByte(财务dataInputBean飞狐.get未分配利润());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get保留());
+		output = convertFloattoByte(财务dataInputBean飞狐.get每股未分配());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get保留1());
+		output = convertFloattoByte(财务dataInputBean飞狐.get每股收益());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-
-
+		output = convertFloattoByte(财务dataInputBean飞狐.get每股净资());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get调整每股净资());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get股东权益比率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get净资收益率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get经营现金流入());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get经营现金流出());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get经营现金流量());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get投资现金流入());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get投资现金流出());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get投资现金流量());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get筹资现金流入());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get筹资现金流出());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get筹资现金流量());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get现金及等价物());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get应收帐款周转率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get存活周转率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get股东总数());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get发行价());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get发行量());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get主营业务增长率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get税后利润增长率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get净资产增长率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+		output = convertFloattoByte(财务dataInputBean飞狐.get总资产增长率());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		return outputData最终;
 	}
 

@@ -6,7 +6,7 @@ import lombok.Data;
 public class 财务DataInputBean飞狐 {
 	private int header ;
 	private int type ;
-	private int 财务个数 ;
+	private int  财务个数 ;
 	private char[] stockCode ;
 	private int start ;
 	private String 市场;
@@ -48,6 +48,55 @@ public class 财务DataInputBean飞狐 {
 	private  float 保留1;
 
 
+	/*
+	 * ----------------
+	 * 以下是飞狐用空数据
+	 * ----------------
+	 */
 
-}
+
+	private  float A2转配股 =(float) 0.0;
+	private  float 总资产千元 =(float) 0.0;
+	private  float 长期投资 =(float) 0.0;
+	private  float 每股公积金 =(float) 0.0;
+	private  float 总资产增长率 =(float) 0.0;
+	private  float 股东权益 =(float) 0.0;
+	private  float 其他利润 =(float) 0.0;
+	private  float 补贴收入 =(float) 0.0;
+	private  float 营业外收支 =(float) 0.0;
+	private  float 损益调整 =(float) 0.0;
+	private  float 每股未分配 =(float) 0.0;
+	private  float 未分配利润 =(float) 0.0;
+	private  float 每股收益 =(float) 0.0;
+	private  float 每股净资 =(float) 0.0;
+	private  float 调整每股净资 =(float) 0.0;
+	private  float 股东权益比率 =(float) 0.0;
+	private  float 净资收益率 =(float) 0.0;
+	private  float 经营现金流入 =(float) 0.0;
+	private  float 经营现金流出 =(float) 0.0;
+	private  float 经营现金流量 =(float) 0.0;
+	private  float 投资现金流入 =(float) 0.0;
+	private  float 投资现金流出 =(float) 0.0;
+	private  float 投资现金流量 =(float) 0.0;
+	private  float 筹资现金流入 =(float) 0.0;
+	private  float 筹资现金流出 =(float) 0.0;
+	private  float 筹资现金流量 =(float) 0.0;
+	private  float 现金及等价物 =(float) 0.0;
+	private  float 应收帐款周转率 =(float) 0.0;
+	private  float 存活周转率 =(float) 0.0;
+	private  float 发行价 =(float) 0.0;
+	private  float 发行量=(float) 0.0;
+	private  float 主营业务增长率 =(float) 0.0;
+	private  float 税后利润增长率 =(float) 0.0;
+	private  float 净资产增长率 =(float) 0.0;
+	private  float 股东总数 =(float) 0.0;
+
+
+
+
+	}
+
+
+
+
 

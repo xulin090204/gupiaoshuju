@@ -63,14 +63,14 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 			else if(股票数 == null) 股票数 = OutputDataUtil爸爸.convertInttoBytePublic(outi股票数[0]);
 
 			// 4、做成最终整合出力数据
-			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并(outHeader, outType, 股票数, resultByte深沪股票财务输出数据);
+			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并(out财务dataOutputBean飞狐.getHeader(), out财务dataOutputBean飞狐.getType(), 股票数, resultByte深沪股票财务输出数据);
 
 			// 5、设置出力文件名
 			String outFileName = PROPERTY.取得飞狐用导入数据文件名();
 			outFileName = StringUtils.isEmpty(outFileName)?"historyDataForFeihuSoftWare": outFileName;
 
 			// 6、写入文件
-			write(PROPERTY.取得sh出力目录().concat("\\").concat(outFileName).concat(".".concat(s数据格式扩展名[Integer.parseInt(sOutPutDataType)])), outputTofile最终整合出力数据);
+			write(PROPERTY.取得sh出力目录().concat("\\").concat(outFileName).concat(".".concat("cwd")), outputTofile最终整合出力数据);
 
 		}
 
@@ -125,9 +125,7 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 			// 【dayDataOutputBean飞狐】是从子函数里返回的值
 			if(out财务dataOutputBean飞狐.getHeader() != null)out财务dataOutputBean飞狐2.setHeader(out财务dataOutputBean飞狐.getHeader());
 			if(out财务dataOutputBean飞狐.getType() != null )out财务dataOutputBean飞狐2.setType(out财务dataOutputBean飞狐.getType());
-            if(out财务dataOutputBean飞狐.getStockCode() != null) {
-           	股票代码 = out财务dataOutputBean飞狐.getStockCode();
-           }
+
 
 			// 股票个数加1
            // 将解析完的数组相加
@@ -135,12 +133,11 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 				// 整合出力数据
 
 				// 财务个数 = OutputDataUtil爸爸.convertInttoBytePublic(i财务数据个数);
-				财务数据个数 = out财务dataOutputBean飞狐.get财务个数();
+				财务数据个数 = out财务dataOutputBean飞狐.get股票数();
 				resultByte深沪股票财务输出数据 = OutputDataUtil爸爸.数组合并2(
 						resultByte深沪股票财务输出数据,
-						out财务dataOutputBean飞狐.getStart(),
-						股票代码,
-						财务数据个数,
+						out财务dataOutputBean飞狐.get股票代码(),
+						out财务dataOutputBean飞狐.get空白(),
 						resultByteO一条
 						);
 
@@ -250,14 +247,14 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 				String s保留1   = s[36];
 
 
-String[] sData = new String[] {s市场, s证券代码,s流通股本 ,s所属省份,s所属行业,s账务更新日期,s上市日期 ,s总股本 ,s国家股,s发起人法人股,s法人股,sB股,sH股,s职工股,s总资产,s流动资产,s固定资产,s无形资产,s股东人数,s流动负债,s长期负债,s资本公积金,s净资产, s主营收入,s主营利润,s应收帐款,s营业利润 ,s投资收益,s经营现金流,s总现金流,s存贷,s利润总额 ,s税后利润,s净利润 ,s未分利润,s保留,s保留1};
+				String[] sData = new String[] {s市场, s证券代码,s流通股本 ,s所属省份,s所属行业,s账务更新日期,s上市日期 ,s总股本 ,s国家股,s发起人法人股,s法人股,sB股,sH股,s职工股,s总资产,s流动资产,s固定资产,s无形资产,s股东人数,s流动负债,s长期负债,s资本公积金,s净资产, s主营收入,s主营利润,s应收帐款,s营业利润 ,s投资收益,s经营现金流,s总现金流,s存贷,s利润总额 ,s税后利润,s净利润 ,s未分利润,s保留,s保留1};
 				/**
 				 * 把每条财务数据进行拼接+组合
 				 */
-	byte[] 财务单条dataOutputBean飞狐 = get财务Byte(sData, 财务dataOutputBean飞狐);
-	resultByte深沪个股财务输出数据  = OutputDataUtil爸爸.数组合并2(resultByte深沪个股财务输出数据, 财务单条dataOutputBean飞狐);
+				byte[] 财务单条dataOutputBean飞狐 = get财务Byte(sData, 财务dataOutputBean飞狐);
+				resultByte深沪个股财务输出数据  = OutputDataUtil爸爸.数组合并2(resultByte深沪个股财务输出数据, 财务单条dataOutputBean飞狐);
 				i财务数据个数++;
-		财务dataOutputBean飞狐.set财务个数(OutputDataUtil爸爸.convertInttoBytePublic(i财务数据个数));
+				财务dataOutputBean飞狐.set股票数(OutputDataUtil爸爸.convertInttoBytePublic(i财务数据个数));
 			}
 		}
 		return resultByte深沪个股财务输出数据;
