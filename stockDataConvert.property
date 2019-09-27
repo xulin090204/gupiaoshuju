@@ -1,5 +1,5 @@
 入力文件路径=C:\\Users\\beihai\\Desktop\\tool\\沪深Ａ股20190417.txt
-sh出力目录=d:\\
+sh出力目录=d:\\pleiades\\workspace\\股票数据
 sz出力目录=C:\\Users\\beihai\\Desktop\\tool\\sz
 #1=钱龙
 #2=飞狐

@@ -28,15 +28,15 @@ public class 财务DataInputBean飞狐 {
 	private  float 固定资产;
 	private  float 无形资产;
 	private  float 股东人数;
-	private float 流动负债;
+	private  float 流动负债;
 	private  float 长期负债;
 	private  float 资本公积金;
 	private  float 净资产;
 	private  float 主营收入;
 	private  float 主营利润;
 	private  float 应收帐款;
-	private   float 营业利润;
-	private float 投资收益;
+	private  float 营业利润;
+	private  float 投资收益;
 	private  float 经营现金流;
 	private  float 总现金流;
 	private  float 存贷;
@@ -56,7 +56,6 @@ public class 财务DataInputBean飞狐 {
 
 
 	private  float A2转配股 =(float) 0.0;
-	private  float 总资产千元 =(float) 0.0;
 	private  float 长期投资 =(float) 0.0;
 	private  float 每股公积金 =(float) 0.0;
 	private  float 总资产增长率 =(float) 0.0;

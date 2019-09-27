@@ -210,6 +210,15 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		财务dataInputBean飞狐.set未分利润(Float.parseFloat(sData[34]));
 		财务dataInputBean飞狐.set保留(Float.parseFloat(sData[35]));
 		财务dataInputBean飞狐.set保留1(Float.parseFloat(sData[36]));
+		财务dataInputBean飞狐.set股东权益(财务dataInputBean飞狐.get净资产());
+		//float f净资产 = 财务dataInputBean飞狐.get净资产();
+		//float f总股本 = 财务dataInputBean飞狐.get总股本();
+		//财务dataInputBean飞狐.set每股净资(f净资产/f总股本);
+
+		财务dataInputBean飞狐.set每股净资(财务dataInputBean飞狐.get净资产()/财务dataInputBean飞狐.get总股本());
+		财务dataInputBean飞狐.set每股公积金(财务dataInputBean飞狐.get资本公积金()/财务dataInputBean飞狐.get总股本());
+		财务dataInputBean飞狐.set每股收益(财务dataInputBean飞狐.get净利润()/财务dataInputBean飞狐.get总股本());
+		财务dataInputBean飞狐.set每股未分配(财务dataInputBean飞狐.get未分利润()/财务dataInputBean飞狐.get总股本());
 
 
 		return createOutputData财务(财务dataInputBean飞狐, 财务dataOutputBean飞狐);
@@ -277,7 +286,7 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.getA2转配股());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
-		output = convertFloattoByte(财务dataInputBean飞狐.get总资产千元());
+		output = convertFloattoByte(财务dataInputBean飞狐.get总资产());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get流动资产());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);

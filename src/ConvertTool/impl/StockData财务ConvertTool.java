@@ -269,6 +269,7 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 	private static boolean 判断是不是有效的财务数据ForDLLData(String[] s) {
 		// 市场 证券代码 日期 权息数据类别 派息金额 配股价 送股数 配股数
 		if(s[2].equals("0.000000")) {return false;}
+		if(s[5].equals("0"))  {return false;}
 		return true;
 	}
 
