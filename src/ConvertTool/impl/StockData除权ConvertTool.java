@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import InputData.InputDataUtil除权;
-import OutputData.OutputDataUtil;
 import OutputData.OutputDataUtil爸爸;
 import OutputData.feihu.OutputDataUtil飞狐;
 import OutputData.feihu.除权DataOutputBean飞狐;
@@ -63,8 +62,8 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 			else if(股票数 == null) 股票数 = OutputDataUtil爸爸.convertInttoBytePublic(outi股票数[0]);
 
 			// 4、做成最终整合出力数据
-			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并2(outHeader, outType, 股票数, resultByte深沪股票除权输出数据);
-
+			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并(outHeader, outType, 股票数, resultByte深沪股票除权输出数据);
+			//除权DataOutputBean飞狐 
 			// 5、设置出力文件名
 			String outFileName = PROPERTY.取得飞狐用导入数据文件名();
 			outFileName = StringUtils.isEmpty(outFileName)?"historyDataForFeihuSoftWare": outFileName;
@@ -245,14 +244,14 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 	}
 
 	private static byte[] get除权Byte(String[] sData, 除权DataOutputBean飞狐 除权dataOutputBean飞狐) {
-		OutputDataUtil outputDataUtil = new OutputDataUtil飞狐();
+		OutputDataUtil飞狐  outputDataUtil = new OutputDataUtil飞狐();
 		return outputDataUtil.getOutputData除权(sData, 除权dataOutputBean飞狐);
 	}
 
 	// 日期！，每次只取得一个日期的文件。
 	public static void main(String[] args) {
 
-		List<String> 除权数据list = InputDataUtil除权.getFileContext2("./除权数据.data");
+		List<String> 除权数据list = InputDataUtil除权.getFileContext2("./通达信 除权数据.data");
 
 		int[] outi股票数 = {0};
 		除权DataOutputBean飞狐 out除权dataOutputBean飞狐 = new 除权DataOutputBean飞狐();
@@ -271,11 +270,11 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 				resultByte深沪股票除权输出数据
 		);
 
-		String outFileName = PROPERTY.取得飞狐用导入数据文件名();
-		outFileName = StringUtils.isEmpty(outFileName)?"historyDataForFeihuSoftWare": outFileName;
+		//String outFileName = PROPERTY.取得飞狐用导入数据文件名();
+		//outFileName = StringUtils.isEmpty(outFileName)?"historyDataForFeihuSoftWare": outFileName;
 
-		//new StockDataOneDayConvertTool().write(PROPERTY.取得sh出力目录().concat("\\").concat(outFileName).concat(".".concat(new StockDataOneDayConvertTool().s数据格式扩展名[Integer.parseInt(sOutPutDataType)])),outputTofile最终整合出力数据);
-		new StockDataOneDayConvertTool().write("/Users/haoyan/Desktop/FinanceDataConvert/ftsplit.CQD",outputTofile最终整合出力数据);
+		new StockDataOneDayConvertTool().write(PROPERTY.取得sh出力目录().concat("\\").concat("ftsplit.CQD"), outputTofile最终整合出力数据);
+		//new StockDataOneDayConvertTool().write("/Users/haoyan/Desktop/FinanceDataConvert/ftsplit.CQD",outputTofile最终整合出力数据);
 
 	}
 }

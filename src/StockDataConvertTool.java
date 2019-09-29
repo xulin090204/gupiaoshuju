@@ -10,7 +10,7 @@ public class StockDataConvertTool {
 	public static void main(String[] args) {
 
 		s方案 = PROPERTY.取得解析方案();
-		s方案 = "3";
+		s方案 = "4";
 
 		switch(s方案) {
 		case "0":

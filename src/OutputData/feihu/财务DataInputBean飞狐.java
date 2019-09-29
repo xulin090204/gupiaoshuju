@@ -14,7 +14,7 @@ public class 财务DataInputBean飞狐 {
 	private  float 流通股本;
 	private  float 所属省份;
 	private  float 所属行业;
-	private  float 账务更新日期;
+	private  int 账务更新日期;
 	private  float 上市日期;
 	private  float 总股本;
 	private  float 国家股;

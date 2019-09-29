@@ -167,10 +167,94 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		return i游标;
 	}
 
+	public byte[] getOutputData除权(String[] sData, 除权DataOutputBean飞狐 除权dataOutputBean飞狐) {
+		// 市场 证券代码 日期 权息数据类别 派息金额 配股价 送股数 配股数
+		除权DataInputBean飞狐 除权dataInputBean飞狐 = new 除权DataInputBean飞狐();
+		除权dataInputBean飞狐.setStockCode(取得市场代号2(sData[0]).concat(sData[1]).toCharArray());
+		除权dataInputBean飞狐.setUTCtime(getUTCtime(sData[2].concat(" 08:00:00")));
+
+		除权dataInputBean飞狐.setHeader(0xffffffd6);
+		除权dataInputBean飞狐.setType(0x00000100);
+		除权dataInputBean飞狐.set分红(Float.parseFloat(sData[4])/10);
+		除权dataInputBean飞狐.set配股价(Float.parseFloat(sData[5]));
+		除权dataInputBean飞狐.set送股(Float.parseFloat(sData[6])/10);
+
+		除权dataInputBean飞狐.set配股(Float.parseFloat(sData[7])/10);
+		除权dataInputBean飞狐.setStart(0xffffffff);
+		return createOutputData除权(除权dataInputBean飞狐, 除权dataOutputBean飞狐);
+	}
+	private byte[] createOutputData除权(除权DataInputBean飞狐 除权dataInputBean飞狐, 除权DataOutputBean飞狐 除权dataOutputBean飞狐) {
+		/**
+		 * 	UTCtime;		// 除权日 : 5cc2 4a00
+			送股;			// 送股   : 0000 0000 * 10
+			配股;			// 配股   : 0000 003F * 10
+			配股价;			// 配股价 : 0000 0041 * 1
+			分红;			// 分红   : cdcc 4c3e * 10
+		 */
+		//--------------------------
+		// 把每个int转成byte
+		// 将转成byte做倒序
+		// 最后进行重组
+		//--------------------------
+		/**
+		 * 	0076 773f
+			0000 0000
+			0000 0000
+			0000 0000
+			9a99 193e
+		 */
+		byte[] outputData最终 = {};
+		byte[] output = null;
+
+		output = convertInttoByte(除权dataInputBean飞狐.getHeader());
+		除权dataOutputBean飞狐.setHeader(output);
+
+		// int type;			// type：00000101
+		output = convertInttoByte(除权dataInputBean飞狐.getType());
+		除权dataOutputBean飞狐.setType(output);
+
+		// int stockCount;		// 股票数：00000001
+		output = convertInttoByte(除权dataInputBean飞狐.get除权个数());
+		除权dataOutputBean飞狐.set除权个数(output);
+
+		// char[] stockCode
+		output = convertChartoByte(除权dataInputBean飞狐.getStockCode());
+		除权dataOutputBean飞狐.setStockCode(output);
+
+		//
+		output = convertInttoByte(除权dataInputBean飞狐.getStart());
+		除权dataOutputBean飞狐.setStart(output);
+
+		// int UTCtime;		// UTC time：5cc24a00
+		output = convertInttoByte(除权dataInputBean飞狐.getUTCtime());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+
+		// float s; 			// 送股
+		output = convertFloattoByte(除权dataInputBean飞狐.get送股());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+
+		// float h; 			// 配股
+		output = convertFloattoByte(除权dataInputBean飞狐.get配股());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+
+		// float l; 			// 配股价
+		output = convertFloattoByte(除权dataInputBean飞狐.get配股价());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+
+		// float l; 			// 分红
+		output = convertFloattoByte(除权dataInputBean飞狐.get分红());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
+
+		return outputData最终;
+	}
+
+
+
 	@Override
 	public byte[] getOutputData财务(String[] sData, 财务DataOutputBean飞狐 财务dataOutputBean飞狐) {
 		// 市场 证券代码 日期 权息数据类别 派息金额 配股价 送股数 配股数
 		财务DataInputBean飞狐 财务dataInputBean飞狐 = new 财务DataInputBean飞狐();
+
 
 
 		财务dataInputBean飞狐.set市场(sData[0]);
@@ -187,27 +271,27 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		财务dataInputBean飞狐.setB股(Float.parseFloat(sData[11]));
 		财务dataInputBean飞狐.setH股(Float.parseFloat(sData[12]));
 		财务dataInputBean飞狐.set职工股(Float.parseFloat(sData[13]));
-		财务dataInputBean飞狐.set总资产(Float.parseFloat(sData[14]));
-		财务dataInputBean飞狐.set流动资产(Float.parseFloat(sData[15]));
-		财务dataInputBean飞狐.set固定资产(Float.parseFloat(sData[16]));
-		财务dataInputBean飞狐.set无形资产(Float.parseFloat(sData[17]));
+		财务dataInputBean飞狐.set总资产(Float.parseFloat(sData[14])/10);
+		财务dataInputBean飞狐.set流动资产(Float.parseFloat(sData[15])/10);
+		财务dataInputBean飞狐.set固定资产(Float.parseFloat(sData[16])/10);
+		财务dataInputBean飞狐.set无形资产(Float.parseFloat(sData[17])/10);
 		财务dataInputBean飞狐.set股东人数(Float.parseFloat(sData[18]));
-		财务dataInputBean飞狐.set流动负债  (Float.parseFloat(sData[19]));
-		财务dataInputBean飞狐.set长期负债(Float.parseFloat(sData[20]));
-		财务dataInputBean飞狐.set资本公积金(Float.parseFloat(sData[21]));
-		财务dataInputBean飞狐.set净资产(Float.parseFloat(sData[22]));
-		财务dataInputBean飞狐.set主营收入(Float.parseFloat(sData[23]));
-		财务dataInputBean飞狐.set主营利润(Float.parseFloat(sData[24]));
-		财务dataInputBean飞狐.set应收帐款(Float.parseFloat(sData[25]));
-		财务dataInputBean飞狐.set营业利润(Float.parseFloat(sData[26]));
-		财务dataInputBean飞狐.set投资收益(Float.parseFloat(sData[27]));
-		财务dataInputBean飞狐.set经营现金流(Float.parseFloat(sData[28]));
-		财务dataInputBean飞狐.set总现金流(Float.parseFloat(sData[29]));
+		财务dataInputBean飞狐.set流动负债  (Float.parseFloat(sData[19])/10);
+		财务dataInputBean飞狐.set长期负债(Float.parseFloat(sData[20])/10);
+		财务dataInputBean飞狐.set资本公积金(Float.parseFloat(sData[21])/10);
+		财务dataInputBean飞狐.set净资产(Float.parseFloat(sData[22])/10);
+		财务dataInputBean飞狐.set主营收入(Float.parseFloat(sData[23])/10);
+		财务dataInputBean飞狐.set主营利润(Float.parseFloat(sData[24])/10);
+		财务dataInputBean飞狐.set应收帐款(Float.parseFloat(sData[25])/10);
+		财务dataInputBean飞狐.set营业利润(Float.parseFloat(sData[26])/10);
+		财务dataInputBean飞狐.set投资收益(Float.parseFloat(sData[27])/10);
+		财务dataInputBean飞狐.set经营现金流(Float.parseFloat(sData[28])/10);
+		财务dataInputBean飞狐.set总现金流(Float.parseFloat(sData[29])/10);
 		财务dataInputBean飞狐.set存贷(Float.parseFloat(sData[30]));
-		财务dataInputBean飞狐.set利润总额(Float.parseFloat(sData[31]));
-		财务dataInputBean飞狐.set税后利润(Float.parseFloat(sData[32]));
-		财务dataInputBean飞狐.set净利润(Float.parseFloat(sData[33]));
-		财务dataInputBean飞狐.set未分利润(Float.parseFloat(sData[34]));
+		财务dataInputBean飞狐.set利润总额(Float.parseFloat(sData[31])/10);
+		财务dataInputBean飞狐.set税后利润(Float.parseFloat(sData[32])/10);
+		财务dataInputBean飞狐.set净利润(Float.parseFloat(sData[33])/10);
+		财务dataInputBean飞狐.set未分利润(Float.parseFloat(sData[34])/10);
 		财务dataInputBean飞狐.set保留(Float.parseFloat(sData[35]));
 		财务dataInputBean飞狐.set保留1(Float.parseFloat(sData[36]));
 		财务dataInputBean飞狐.set股东权益(财务dataInputBean飞狐.get净资产());
@@ -262,12 +346,13 @@ public class OutputDataUtil飞狐 extends OutputDataUtil爸爸 implements Output
 		output =convertInttoByte(0x00000000);
 		财务dataOutputBean飞狐.set空白(output);
 
+
 		财务dataInputBean飞狐.setStockCode(取得市场代号2(财务dataInputBean飞狐.get市场()).concat(财务dataInputBean飞狐.get证券代码()).toCharArray());
 		output = convertChartoByte(财务dataInputBean飞狐.getStockCode());
 		财务dataOutputBean飞狐.set股票代码(output);
-		// outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 
-
+		output =convertInttoByte(财务dataInputBean飞狐.get账务更新日期());
+		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get总股本());
 		outputData最终 = OutputDataUtil爸爸.数组合并2(outputData最终, output);
 		output = convertFloattoByte(财务dataInputBean飞狐.get国家股());

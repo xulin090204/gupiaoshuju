@@ -63,7 +63,7 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 			else if(股票数 == null) 股票数 = OutputDataUtil爸爸.convertInttoBytePublic(outi股票数[0]);
 
 			// 4、做成最终整合出力数据
-			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并(out财务dataOutputBean飞狐.getHeader(), out财务dataOutputBean飞狐.getType(), 股票数, resultByte深沪股票财务输出数据);
+			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并2(out财务dataOutputBean飞狐.getHeader(), out财务dataOutputBean飞狐.getType(), 股票数, resultByte深沪股票财务输出数据);
 
 			// 5、设置出力文件名
 			String outFileName = PROPERTY.取得飞狐用导入数据文件名();
@@ -137,7 +137,7 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 				resultByte深沪股票财务输出数据 = OutputDataUtil爸爸.数组合并2(
 						resultByte深沪股票财务输出数据,
 						out财务dataOutputBean飞狐.get股票代码(),
-						out财务dataOutputBean飞狐.get空白(),
+						//out财务dataOutputBean飞狐.get空白(),
 						resultByteO一条
 						);
 
@@ -271,7 +271,7 @@ public class StockData财务ConvertTool extends StockData爸爸 implements Conve
 		if(s[2].equals("0.000000")) {return false;}
 		if(s[5].equals("0"))  {return false;}
 		return true;
-	}
+	  }
 
 	private static byte[] get财务Byte(String[] sData, 财务DataOutputBean飞狐 财务dataOutputBean飞狐) {
 		OutputDataUtil outputDataUtil = new OutputDataUtil飞狐();
