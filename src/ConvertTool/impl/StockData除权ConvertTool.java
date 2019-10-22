@@ -25,9 +25,11 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 	}
 
 	/**
+	 * @param s财务原始文件全路径
+	 * @return
 	 *
 	 */
-	public void 输出到除权文件() {
+	public String 输出到除权文件(String[] s除权原始文件全路径) {
 
 		this.s最后交易日期 = new String[1];
 		// this.sDate = "20190507";
@@ -46,10 +48,10 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 		int[] outi股票数 = {0};
 
 
-		if(InputDataUtil除权.取得除权数据和最后交易日(out除权数据list, s最后交易日期)) {
+		if(InputDataUtil除权.取得除权数据和最后交易日(out除权数据list, s最后交易日期, s除权原始文件全路径)) {
 			// 1、事前判断
 			// todayDatas.add("0	002191	4052	12.580000	13.410000	12.980000	13.800000	12.220000	14999043	-1258	591083	4542	762218816.000000	327635	263448	6	129813	12.580000	12.590000	1280	1113	12.570000	12.600000	22	112	12.530000	12.610000	93	30	12.520000	12.620000	850	178	12.510000	12.630000	4	280	3402	0	-57	187	-65	0.400000	4052");
-			if(out除权数据list == null || out除权数据list.size() <= 0) {return;}
+			if(out除权数据list == null || out除权数据list.size() <= 0) {return null;}
 
 			// 2、解析取到的深沪股票除权输出数据:把除权信息做成出力格式
 			List<String> in除权数据list = out除权数据list;
@@ -57,21 +59,25 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 			resultByte深沪股票除权输出数据 = 解析取到的深沪股票除权输出数据(in除权数据list, outi股票数, out除权dataOutputBean飞狐);
 
 			// 3、如果没有有效的除权股票，就退出
-			if(outi股票数[0] == 0) return;
+			if(outi股票数[0] == 0) return null;
 			//    否则、计算有效股票数的输出格式
 			else if(股票数 == null) 股票数 = OutputDataUtil爸爸.convertInttoBytePublic(outi股票数[0]);
 
 			// 4、做成最终整合出力数据
 			outputTofile最终整合出力数据 = OutputDataUtil爸爸.数组合并(outHeader, outType, 股票数, resultByte深沪股票除权输出数据);
-			//除权DataOutputBean飞狐 
+			//除权DataOutputBean飞狐
 			// 5、设置出力文件名
 			String outFileName = PROPERTY.取得飞狐用导入数据文件名();
 			outFileName = StringUtils.isEmpty(outFileName)?"historyDataForFeihuSoftWare": outFileName;
-
+			String s出力文件全路径 = PROPERTY.取得sh出力目录().concat("\\").concat(outFileName).concat(".".concat(s数据格式扩展名[Integer.parseInt(sOutPutDataType)]));
 			// 6、写入文件
-			write(PROPERTY.取得sh出力目录().concat("\\").concat(outFileName).concat(".".concat(s数据格式扩展名[Integer.parseInt(sOutPutDataType)])), outputTofile最终整合出力数据);
+			write(s出力文件全路径, outputTofile最终整合出力数据);
+
+			return s出力文件全路径;
 
 		}
+
+		return null;
 
 	}
 
@@ -84,7 +90,7 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 	 * @param out除权dataOutputBean飞狐2
 	 * @return
 	 */
-	private byte[] 解析取到的深沪股票除权输出数据(List<String> 除权数据list, int[] i股票数, 除权DataOutputBean飞狐 out除权dataOutputBean飞狐2) {
+	public byte[] 解析取到的深沪股票除权输出数据(List<String> 除权数据list, int[] i股票数, 除权DataOutputBean飞狐 out除权dataOutputBean飞狐2) {
 		/**
 		 * 除权数据list是什么样子？
 		 *
@@ -124,9 +130,9 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 			// 【dayDataOutputBean飞狐】是从子函数里返回的值
 			if(out除权dataOutputBean飞狐.getHeader() != null)out除权dataOutputBean飞狐2.setHeader(out除权dataOutputBean飞狐.getHeader());
 			if(out除权dataOutputBean飞狐.getType() != null )out除权dataOutputBean飞狐2.setType(out除权dataOutputBean飞狐.getType());
-           if(out除权dataOutputBean飞狐.getStockCode() != null) {
-           	股票代码 = out除权dataOutputBean飞狐.getStockCode();
-           }
+			if(out除权dataOutputBean飞狐.getStockCode() != null) {
+				股票代码 = out除权dataOutputBean飞狐.getStockCode();
+			}
 
 			// 股票个数加1
            // 将解析完的数组相加
@@ -191,6 +197,8 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 		int iIndex = 0;
 		int i除权数据个数 = 0;
 		for(String s每项除权数据  : s每条除权数据) {
+
+			// 为了越过头信息
 			if(iIndex == 0) {
 				iIndex++;
 				continue;
@@ -237,7 +245,7 @@ public class StockData除权ConvertTool extends StockData爸爸 implements Conve
 	 * @return 如果 权息数据类别 == “1” return true;
 	 *         如果 权息数据类别 != “1” return false;
 	 */
-	private static boolean 判断是不是有效的除权数据ForDLLData(String[] s) {
+	public static boolean 判断是不是有效的除权数据ForDLLData(String[] s) {
 		// 市场 证券代码 日期 权息数据类别 派息金额 配股价 送股数 配股数
 		if(s[3].equals("1")) {return true;}
 		return false;
